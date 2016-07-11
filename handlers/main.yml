@@ -1,0 +1,5 @@
+---
+- name: restart chronyd
+  tags: chrony
+  service: name=chronyd
+           state=restarted

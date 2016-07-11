@@ -1,0 +1,120 @@
+# Use public servers from the pool.ntp.org project.
+# Please consider joining the pool (http://www.pool.ntp.org/join.html).
+{% if chrony_server is defined %}
+{%   for server in chrony_server %}
+server {{ server }} iburst
+{%   endfor %}
+{% else %}
+server 0.centos.pool.ntp.org iburst
+server 1.centos.pool.ntp.org iburst
+server 2.centos.pool.ntp.org iburst
+server 3.centos.pool.ntp.org iburst
+{% endif %}
+
+# Ignore stratum in source selection.
+{% if chrony_stratumweight is defined %}
+stratumweight {{ chrony_stratumweight }}
+{% else %}
+stratumweight 0
+{% endif %}
+
+# Record the rate at which the system clock gains/losses time.
+{% if chrony_driftfile is defined %}
+driftfile {{ chrony_driftfile }}
+{% else %}
+driftfile /var/lib/chrony/drift
+{% endif %}
+
+# Enable kernel RTC synchronization.
+{% if chrony_rtcsync is defined %}
+{%   if chrony_rtcsync %}
+rtcsync
+{%   else %}
+#rtcsync
+{%   endif %}
+{% else %}
+rtcsync
+{% endif %}
+
+# In first three updates step the system clock instead of slew
+# if the adjustment is larger than 10 seconds.
+{% if chrony_makestep is defined %}
+makestep {{ chrony_makestep|join(' ') }}
+{% else %}
+makestep 10 3
+{% endif %}
+
+# Allow NTP client access from local network.
+{% if chrony_allow is defined %}
+{%   for allow in chrony_allow %}
+allow {{ allow }}
+{%   endfor %}
+{% else %}
+#allow 192.168/16
+{% endif %}
+
+# Listen for commands only on localhost.
+{% if chrony_bindcmdaddress is defined %}
+{%   for bindcmdaddress in chrony_bindcmdaddress %}
+bindcmdaddress {{ bindcmdaddress }}
+{%   endfor %}
+{% else %}
+bindcmdaddress 127.0.0.1
+bindcmdaddress ::1
+{% endif %}
+
+# Serve time even if not synchronized to any NTP server.
+{% if chrony_local is defined %}
+local {{ chrony_local }}
+{% else %}
+#local stratum 10
+{% endif %}
+
+{% if chrony_keyfile is defined %}
+keyfile {{ chrony_keyfile }}
+{% else %}
+keyfile /etc/chrony.keys
+{% endif %}
+
+# Specify the key used as password for chronyc.
+{% if chrony_commandkey is defined %}
+commandkey {{ chrony_commandkey }}
+{% else %}
+commandkey 1
+{% endif %}
+
+# Generate command key if missing.
+{% if chrony_generatecommandkey is defined %}
+{%   if chrony_generatecommandkey %}
+generatecommandkey
+{%   else %}
+#generatecommandkey
+{%   endif %}
+{% else %}
+generatecommandkey
+{% endif %}
+
+# Disable logging of client accesses.
+{% if chrony_noclientlog is defined %}
+{%   if chrony_noclientlog %}
+noclientlog
+{%   else %}
+#noclientlog
+{%   endif %}
+{% else %}
+noclientlog
+{% endif %}
+
+# Send a message to syslog if a clock adjustment is larger than 0.5 seconds.
+{% if chrony_logchange is defined %}
+logchange {{ chrony_logchange }}
+{% else %}
+logchange 0.5
+{% endif %}
+
+{% if chrony_logdir is defined %}
+logdir {{ chrony_logdir }}
+{% else %}
+logdir /var/log/chrony
+{% endif %}
+#log measurements statistics tracking
