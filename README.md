@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/linuxhq/ansible-role-chrony.svg?branch=master)](https://travis-ci.org/linuxhq/ansible-role-chrony)
 
-RHEL/CentOS - Versatile implementation of the Network Time Protocol
+RHEL/CentOS - Network Time Protocol daemon (chrony)
 
 ## Requirements
 
