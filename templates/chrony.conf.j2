@@ -117,4 +117,8 @@ logdir {{ chrony_logdir }}
 {% else %}
 logdir /var/log/chrony
 {% endif %}
+{% if chrony_log is defined %}
+log {{ chrony_log|join(' ') }}
+{% else %}
 #log measurements statistics tracking
+{% endif %}

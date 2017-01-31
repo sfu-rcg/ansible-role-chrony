@@ -29,6 +29,16 @@ Available variables are listed below, along with default values:
       - 3.centos.pool.ntp.org
     chrony_stratumweight: 0
 
+Additional variabels not defined by default
+
+    chrony_allow:
+      - 192.168/16
+    chrony_local: 'stratum 10'
+    chrony_log:
+      - measurements
+      - statistics
+      - tracking
+
 ## Dependencies
 
 None
