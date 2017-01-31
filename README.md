@@ -29,7 +29,7 @@ Available variables are listed below, along with default values:
       - 3.centos.pool.ntp.org
     chrony_stratumweight: 0
 
-Additional variabels not defined by default
+Additional variables not defined by default
 
     chrony_allow:
       - 192.168/16
