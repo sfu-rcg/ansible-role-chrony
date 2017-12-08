@@ -24,5 +24,6 @@
         name: chronyd
         state: started
   tags: chrony
+  become: true
   when: chrony_yum|success
 ...
