@@ -9,4 +9,5 @@ chrony_commands:
     - 1.centos.pool.ntp.org iburst
     - 2.centos.pool.ntp.org iburst
     - 3.centos.pool.ntp.org iburst
+chrony_sysconfig: ''
 ...

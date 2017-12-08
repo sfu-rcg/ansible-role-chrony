@@ -22,6 +22,7 @@ Available variables are listed below, along with default values:
         - 1.centos.pool.ntp.org iburst
         - 2.centos.pool.ntp.org iburst
         - 3.centos.pool.ntp.org iburst
+    chrony_sysconfig: ''
 
 ## Dependencies
 
@@ -50,6 +51,7 @@ None
               - 1.centos.pool.ntp.org iburst
               - 2.centos.pool.ntp.org iburst
               - 3.centos.pool.ntp.org iburst
+          chrony_sysconfig: '-F 1'
 
 ## License
 
