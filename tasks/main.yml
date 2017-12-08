@@ -16,10 +16,10 @@
         owner: root
         group: root
         mode: "{{ item.mode }}"
+      notify: restart chronyd
       with_items:
         - { src: chrony.conf.j2, dest: /etc/chrony.conf, mode: 0644 }
         - { src: chrony.sysconfig.j2, dest: /etc/sysconfig/chrony, mode: 0644 }
-      notify: restart chronyd
 
     - name: Enable and start the chronyd service on boot
       service:
