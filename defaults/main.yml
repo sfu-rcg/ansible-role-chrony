@@ -1,17 +1,12 @@
 ---
-chrony_bindcmdaddress: [ '127.0.0.1', '::1' ]
-chrony_commandkey: 1
-chrony_driftfile: /var/lib/chrony/drift
-chrony_generatecommandkey: True
-chrony_keyfile: /etc/chrony.keys
-chrony_logchange: 0.5
-chrony_logdir: /var/log/chrony
-chrony_makestep: [ '10', '3' ]
-chrony_noclientlog: True
-chrony_rtcsync: True
-chrony_server:
-  - 0.centos.pool.ntp.org
-  - 1.centos.pool.ntp.org
-  - 2.centos.pool.ntp.org
-  - 3.centos.pool.ntp.org
-chrony_stratumweight: 0
+chrony_commands:
+  driftfile: /var/lib/chrony/drift
+  logdir: /var/log/chrony
+  makestep: '1.0 3'
+  rtcsync: True
+  server:
+    - 0.centos.pool.ntp.org iburst
+    - 1.centos.pool.ntp.org iburst
+    - 2.centos.pool.ntp.org iburst
+    - 3.centos.pool.ntp.org iburst
+...

@@ -12,32 +12,16 @@ None
 
 Available variables are listed below, along with default values:
 
-    chrony_bindcmdaddress: [ '127.0.0.1', '::1' ]
-    chrony_commandkey: 1
-    chrony_driftfile: /var/lib/chrony/drift
-    chrony_generatecommandkey: True
-    chrony_keyfile: /etc/chrony.keys
-    chrony_logchange: 0.5
-    chrony_logdir: /var/log/chrony
-    chrony_makestep: [ '10', '3' ]
-    chrony_noclientlog: True
-    chrony_rtcsync: True
-    chrony_server:
-      - 0.centos.pool.ntp.org
-      - 1.centos.pool.ntp.org
-      - 2.centos.pool.ntp.org
-      - 3.centos.pool.ntp.org
-    chrony_stratumweight: 0
-
-Additional variables not defined by default
-
-    chrony_allow:
-      - 192.168/16
-    chrony_local: 'stratum 10'
-    chrony_log:
-      - measurements
-      - statistics
-      - tracking
+    chrony_commands:
+      driftfile: /var/lib/chrony/drift
+      logdir: /var/log/chrony
+      makestep: '1.0 3'
+      rtcsync: True
+      server:
+        - 0.centos.pool.ntp.org iburst
+        - 1.centos.pool.ntp.org iburst
+        - 2.centos.pool.ntp.org iburst
+        - 3.centos.pool.ntp.org iburst
 
 ## Dependencies
 
@@ -48,10 +32,28 @@ None
     - hosts: servers
       roles:
         - role: linuxhq.chrony
+          chrony_commands:
+            allow:
+              - 10.0.0.0/8
+              - 172.16.0.0/12
+              - 192.168.0.0/16
+            hwtimestamp: '*'
+            keyfile: /etc/chrony.keys
+            log: 'measurements statistics tracking'
+            driftfile: /var/lib/chrony/drift
+            logdir: /var/log/chrony
+            makestep: '1.0 3'
+            minsources: 2
+            rtcsync: True
+            server:
+              - 0.centos.pool.ntp.org iburst
+              - 1.centos.pool.ntp.org iburst
+              - 2.centos.pool.ntp.org iburst
+              - 3.centos.pool.ntp.org iburst
 
 ## License
 
-BSD
+GPLv3
 
 ## Author Information
 

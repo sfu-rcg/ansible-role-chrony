@@ -1,23 +1,28 @@
 ---
-- name: Install chrony package
+- name: Ensure that the chrony package is installed
   tags: chrony
-  yum: name=chrony
-       state=present
-       update_cache=yes
+  become: true
+  yum:
+    name: chrony
+    state: present
   register: chrony_yum
 
 - block:
-    - name: Configure chrony.conf
-      template: src=chrony.conf.j2
-                dest=/etc/chrony.conf
-                owner=root
-                group=root
-                mode=0644
+    - name: Applying chrony.conf configurations
+      tags: chrony
+      template:
+        src: chrony.conf.j2
+        dest: /etc/chrony.conf
+        owner: root
+        group: root
+        mode: 0644
       notify: restart chronyd
-    - name: Enable and start the chronyd service
-      service: name=chronyd
-               enabled=yes
-               state=started
+
+    - name: Enable and start the chronyd service on boot
+      service:
+        enabled: yes
+        name: chronyd
+        state: started
   tags: chrony
   when: chrony_yum|success
-
+...
