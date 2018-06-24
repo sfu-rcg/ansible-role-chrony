@@ -7,26 +7,27 @@
     state: present
   register: chrony_yum
 
-- block:
-    - name: Applying chrony.conf and sysconfig configurations
-      tags: chrony
-      template:
-        src: "{{ item.src }}"
-        dest: "{{ item.dest }}"
-        owner: root
-        group: root
-        mode: "{{ item.mode }}"
-      notify: restart chronyd
-      with_items:
-        - { src: chrony.conf.j2, dest: /etc/chrony.conf, mode: 0644 }
-        - { src: chronyd.sysconfig.j2, dest: /etc/sysconfig/chronyd, mode: 0644 }
-
-    - name: Enable and start the chronyd service on boot
-      service:
-        enabled: yes
-        name: chronyd
-        state: started
+- name: Attempting to overlay chrony configurations
   tags: chrony
   become: true
-  when: chrony_yum|success
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: root
+    group: root
+    mode: "{{ item.mode }}"
+  notify: restart chronyd
+  with_items:
+    - { src: chrony.conf.j2, dest: /etc/chrony.conf, mode: 0644 }
+    - { src: chronyd.sysconfig.j2, dest: /etc/sysconfig/chronyd, mode: 0644 }
+  when: chrony_yum is success
+
+- name: Ensure that chrony is started and enabled on boot
+  tags: chrony
+  become: true
+  service:
+    enabled: yes
+    name: chronyd
+    state: started
+  when: chrony_yum is success
 ...
