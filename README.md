@@ -18,7 +18,7 @@ Available variables are listed below, along with default values:
       driftfile: /var/lib/chrony/drift
       logdir: /var/log/chrony
       makestep: '1.0 3'
-      rtcsync: True
+      rtcsync: true
       server:
         - 0.centos.pool.ntp.org iburst
         - 1.centos.pool.ntp.org iburst
