@@ -18,9 +18,44 @@
   notify: restart chronyd
   loop:
     - { src: chrony.conf.j2, dst: /etc/chrony.conf, mode: 0644 }
+  loop_control:
+    label: "{{ item.dst|basename }}"
+
+
+- name: Set chrony defaults (Red Hat)
+  tags: chrony
+  become: true
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dst }}"
+    owner: root
+    group: root
+    mode: "{{ item.mode }}"
+  notify: restart chronyd
+  loop:
     - { src: chronyd.sysconfig.j2, dst: /etc/sysconfig/chronyd, mode: 0644 }
   loop_control:
     label: "{{ item.dst|basename }}"
+  when: ansible_os_family == 'RedHat'
+
+- name: Set chrony defaults (Debian)
+  tags: chrony
+  become: true
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dst }}"
+    owner: root
+    group: root
+    mode: "{{ item.mode }}"
+  notify: restart chronyd
+  loop:
+    - { src: chrony.default.j2, dst: /etc/default/chrony, mode: 0644 }
+  loop_control:
+    label: "{{ item.dst|basename }}"
+  when: ansible_os_family == 'Debian'
+
+
+
 
 - name: Ensure that chrony is started and enabled on boot
   tags: chrony

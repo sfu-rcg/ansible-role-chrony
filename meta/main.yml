@@ -3,13 +3,19 @@ dependencies: []
 galaxy_info:
   role_name: chrony
   author: tkimball83
-  description: RHEL/CentOS - Network Time Protocol daemon (chrony)
+  description: Debian/UBuntu/RHEL/CentOS - Network Time Protocol daemon (chrony)
   license: GPLv3
   min_ansible_version: 2.7
   platforms:
     - name: EL
       versions:
         - all
+    - name: Debian
+      versions:
+        - all
+    - name: Ubuntu
+      versions:
+        - 18.04
   galaxy_tags:
     - chrony
 ...
