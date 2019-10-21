@@ -2,7 +2,7 @@
 - name: Ensure that the chrony package is installed
   tags: chrony
   become: true
-  :
+  package:
     name: chrony
     state: present
 
