@@ -2,7 +2,7 @@
 - name: Ensure that the chrony package is installed
   tags: chrony
   become: true
-  yum:
+  :
     name: chrony
     state: present
 
